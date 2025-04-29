@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authors - हिंदी साहित्य</title>
+    <style>
+        :root {
+            --primary-color: #f8b400;
+            --secondary-color: #1a3c40;
+            --accent-color: #4a6b5f;
+            --light-color: #f5f5f5;
+            --dark-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+        }
+
+        nav {
+            background-color: var(--accent-color);
+            padding: 0.8rem 0;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin: 0 1rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+
+        .authors-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .authors-header h1 {
+            color: var(--secondary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .authors-header p {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-bar {
+            max-width: 600px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-bar input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        .authors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .author-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .author-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .author-image {
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .author-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info {
+            padding: 1.5rem;
+        }
+
+        .author-info h3 {
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .author-info .years {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .author-info p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .author-stats {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            color: var(--secondary-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .authors-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">हिंदी साहित्य</div>
+        <div class="tagline">Hindi Literature Library</div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="books.html">Books</a></li>
+                <li><a href="authors.html">Authors</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="authors-header">
+            <h1>Renowned Hindi Authors</h1>
+            <p>Discover the literary giants who have shaped Hindi literature through their timeless works and profound contributions.</p>
+        </div>
+
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" id="authorSearchInput" placeholder="Search authors by name or genre..." oninput="searchAuthors(this.value)">
+        </div>
+
+        <div class="authors-grid">
+            <div class="author-card" data-english-name="Munshi Premchand">
+                <div class="author-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Prem_chand.jpg" alt="Munshi Premchand">
+                </div>
+                <div class="author-info">
+                    <h3>मुंशी प्रेमचंद</h3>
+                    <div class="years">1880 - 1936</div>
+                    <p>Known as the "Upanyas Samrat", Premchand was a pioneer of modern Hindi and Urdu literature. His works like "Godan" and "Nirmala" are considered classics.</p>
+                    <div class="author-stats">
+                        <div class="stat">
+                            <div class="stat-value">14</div>
+                            <div class="stat-label">Novels</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">300+</div>
+                            <div class="stat-label">Stories</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">1920</div>
+                            <div class="stat-label">First Work</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="author-card" data-english-name="Mahadevi Varma">
+                <div class="author-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/4/42/MahadeviVarmaPic.png" alt="Mahadevi Varma">
+                </div>
+                <div class="author-info">
+                    <h3>महादेवी वर्मा</h3>
+                    <div class="years">1907 - 1987</div>
+                    <p>A prominent poet and prose writer of the Chhayavad movement, known for her feminist writings and contributions to Hindi literature.</p>
+                    <div class="author-stats">
+                        <div class="stat">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Poetry Collections</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">15</div>
+                            <div class="stat-label">Prose Works</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">1930</div>
+                            <div class="stat-label">First Work</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="author-card" data-english-name="Harivansh Rai Bachchan">
+                <div class="author-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/mai/c/ca/Harivansh_Rai_Bachchan.jpg" alt="Harivansh Rai Bachchan">
+                </div>
+                <div class="author-info">
+                    <h3>हरिवंश राय बच्चन</h3>
+                    <div class="years">1907 - 2003</div>
+                    <p>A legendary poet known for his lyrical work "Madhushala" and romantic poetry that touched millions of hearts.</p>
+                    <div class="author-stats">
+                        <div class="stat">
+                            <div class="stat-value">30+</div>
+                            <div class="stat-label">Poetry Collections</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">4</div>
+                            <div class="stat-label">Autobiographies</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">1935</div>
+                            <div class="stat-label">Madhushala</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="author-card" data-english-name="Bhisham Sahni">
+                <div class="author-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Bhishamsahni.jpg" alt="Bhisham Sahni">
+                </div>
+                <div class="author-info">
+                    <h3>भीष्म साहनी</h3>
+                    <div class="years">1915 - 2003</div>
+                    <p>Renowned for his novel "Tamas" which depicted the partition of India, Sahni was a master storyteller of human emotions and social issues.</p>
+                    <div class="author-stats">
+                        <div class="stat">
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">Novels</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">20+</div>
+                            <div class="stat-label">Short Stories</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">1974</div>
+                            <div class="stat-label">Tamas</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="author-card" data-english-name="Nagarjun">
+                <div class="author-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/1/1b/Nagarjun_%281911-1998%29.jpg" alt="Nagarjun">
+                </div>
+                <div class="author-info">
+                    <h3>नागार्जुन</h3>
+                    <div class="years">1911 - 1998</div>
+                    <p>A revolutionary poet and novelist known for his works like "Aandhi" that highlighted social issues and human struggles.</p>
+                    <div class="author-stats">
+                        <div class="stat">
+                            <div class="stat-value">10+</div>
+                            <div class="stat-label">Novels</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">15+</div>
+                            <div class="stat-label">Poetry Collections</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">1966</div>
+                            <div class="stat-label">Aandhi</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="author-card" data-english-name="Dharamvir Bharati">
+                <div class="author-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/hi/5/54/DharmaveerBharatii.jpg" alt="Dharamvir Bharati">
+                </div>
+                <div class="author-info">
+                    <h3>धर्मवीर भारती</h3>
+                    <div class="years">1926 - 1997</div>
+                    <p>Famous for his novel "Gunahon Ka Devta" and short stories like "Suraj Ka Saatva Ghoda", Bharati was a master of emotional storytelling.</p>
+                    <div class="author-stats">
+                        <div class="stat">
+                            <div class="stat-value">5</div>
+                            <div class="stat-label">Novels</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">10+</div>
+                            <div class="stat-label">Short Stories</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">1949</div>
+                            <div class="stat-label">First Work</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="author-card" data-english-name="Phanishwar Nath Renu">
+                <div class="author-image">
+                    <img src="https://i3.wp.com/www.thetalentedindian.com/wp-content/uploads/2022/03/Phanishwar-Nath-Renu.png" alt="Phanishwar Nath Renu">
+                </div>
+                <div class="author-info">
+                    <h3>फणीश्वर नाथ रेणु</h3>
+                    <div class="years">1921 - 1977</div>
+                    <p>Known for his novel "Maila Aanchal", Renu was a pioneer of the "Anchalik Upanyas" (Regional Novel) movement in Hindi literature.</p>
+                    <div class="author-stats">
+                        <div class="stat">
+                            <div class="stat-value">6</div>
+                            <div class="stat-label">Novels</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">Short Stories</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">1954</div>
+                            <div class="stat-label">Maila Aanchal</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="author-card" data-english-name="Kamleshwar">
+                <div class="author-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Kamleshwar_%281932_-_2007%29.jpg/800px-Kamleshwar.jpg" alt="Kamleshwar">
+                </div>
+                <div class="author-info">
+                    <h3>कमलेश्वर</h3>
+                    <div class="years">1932 - 2007</div>
+                    <p>Known for his novel "Kitne Pakistan", Kamleshwar was a prominent writer who explored themes of partition and human relationships.</p>
+                    <div class="author-stats">
+                        <div class="stat">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Novels</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">20+</div>
+                            <div class="stat-label">Short Stories</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">2000</div>
+                            <div class="stat-label">Kitne Pakistan</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="author-card" data-english-name="Amrita Pritam">
+                <div class="author-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Amrita_Pritam_%281919_%E2%80%93_2005%29_%2C_in_1948.jpg" alt="Amrita Pritam">
+                </div>
+                <div class="author-info">
+                    <h3>अमृता प्रीतम</h3>
+                    <div class="years">1919 - 2005</div>
+                    <p>A prominent Punjabi and Hindi writer known for her novel "Ek Ladki" and her contributions to feminist literature.</p>
+                    <div class="author-stats">
+                        <div class="stat">
+                            <div class="stat-value">28</div>
+                            <div class="stat-label">Novels</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">16</div>
+                            <div class="stat-label">Poetry Collections</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">1968</div>
+                            <div class="stat-label">Ek Ladki</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="author-card" data-english-name="Yashpal">
+                <div class="author-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Prof._Yash_Pal.jpg/1200px-Prof._Yash_Pal.jpg" alt="Yashpal">
+                </div>
+                <div class="author-info">
+                    <h3>यशपाल</h3>
+                    <div class="years">1903 - 1976</div>
+                    <p>Known for his novel "Jhoota Sach", Yashpal was a revolutionary writer who explored themes of social justice and human values.</p>
+                    <div class="author-stats">
+                        <div class="stat">
+                            <div class="stat-value">10</div>
+                            <div class="stat-label">Novels</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">15+</div>
+                            <div class="stat-label">Short Stories</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">1958</div>
+                            <div class="stat-label">Jhoota Sach</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="author-card" data-english-name="Bhagwati Charan Varma">
+                <div class="author-image">
+                    <img src="https://static.toiimg.com/thumb/msid-84222444,imgsize-190292,width-400,resizemode-4/84222444.jpg" alt="Bhagwati Charan Varma">
+                </div>
+                <div class="author-info">
+                    <h3>भगवतीचरण वर्मा</h3>
+                    <div class="years">1903 - 1981</div>
+                    <p>Known for his novel "Chitralekha", Varma was a prominent writer who explored themes of love, morality, and spiritual quest.</p>
+                    <div class="author-stats">
+                        <div class="stat">
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">Novels</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Short Stories</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">1934</div>
+                            <div class="stat-label">Chitralekha</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="author-card" data-english-name="Agneya">
+                <div class="author-image">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxhPCL46NZaONbeEOGsr3nzqTl92udv0jasA&s" alt="Agneya">
+                </div>
+                <div class="author-info">
+                    <h3>अग्नेय</h3>
+                    <div class="years">1911 - 1987</div>
+                    <p>Known for his short story "Apni Khabar", Agneya was a prominent writer who explored themes of alienation and modern life.</p>
+                    <div class="author-stats">
+                        <div class="stat">
+                            <div class="stat-value">5</div>
+                            <div class="stat-label">Novels</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">10+</div>
+                            <div class="stat-label">Short Stories</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">1961</div>
+                            <div class="stat-label">Apni Khabar</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/d40eb0e1fa.js" crossorigin="anonymous"></script>
+    <script>
+        function searchAuthors(query) {
+            query = query.toLowerCase();
+            const authorCards = document.querySelectorAll('.author-card');
+            
+            authorCards.forEach(card => {
+                const name = card.querySelector('h3').textContent.toLowerCase();
+                const englishName = card.getAttribute('data-english-name').toLowerCase();
+                const info = card.querySelector('p').textContent.toLowerCase();
+                const years = card.querySelector('.years').textContent.toLowerCase();
+                
+                if (name.includes(query) || 
+                    englishName.includes(query) || 
+                    info.includes(query) || 
+                    years.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Initialize search if URL contains search parameter
+        window.addEventListener('load', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchQuery = urlParams.get('search');
+            if (searchQuery) {
+                const searchInput = document.getElementById('authorSearchInput');
+                searchInput.value = searchQuery;
+                searchAuthors(searchQuery);
+            }
+        });
+    </script>
+</body>
+</html> 

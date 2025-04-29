@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books - हिंदी साहित्य</title>
+    <style>
+        :root {
+            --primary-color: #f8b400;
+            --secondary-color: #1a3c40;
+            --accent-color: #4a6b5f;
+            --light-color: #f5f5f5;
+            --dark-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+        }
+
+        nav {
+            background-color: var(--accent-color);
+            padding: 0.8rem 0;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin: 0 1rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+
+        .books-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .books-header h1 {
+            color: var(--secondary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .books-header p {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            color: var(--dark-color);
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .filter-group select:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+
+        .search-bar {
+            width: 100%;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-bar input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .book-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .book-cover {
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .book-info {
+            padding: 1.5rem;
+        }
+
+        .book-info h3 {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-info .author {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .book-info p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .book-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            color: var(--primary-color);
+        }
+
+        .rating i {
+            margin-right: 0.3rem;
+        }
+
+        .read-btn {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .read-btn:hover {
+            background-color: #e6a500;
+        }
+
+        @media (max-width: 768px) {
+            .filters {
+                flex-direction: column;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">हिंदी साहित्य</div>
+        <div class="tagline">Hindi Literature Library</div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="books.html">Books</a></li>
+                <li><a href="authors.html">Authors</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="books-header">
+            <h1>Hindi Literature Collection</h1>
+            <p>Explore our vast collection of Hindi literature, from classic novels to contemporary works.</p>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <select id="genreFilter" onchange="filterBooks()" aria-label="Filter by genre">
+                    <option value="">All Genres</option>
+                    <option value="novel">Novel</option>
+                    <option value="poetry">Poetry</option>
+                    <option value="short-story">Short Story</option>
+                    <option value="drama">Drama</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <select id="authorFilter" onchange="filterBooks()" aria-label="Filter by author">
+                    <option value="">All Authors</option>
+                    <option value="premchand">Premchand</option>
+                    <option value="mahadevi">Mahadevi Varma</option>
+                    <option value="bachchan">Harivansh Rai Bachchan</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <select id="sortFilter" onchange="filterBooks()" aria-label="Sort books">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="rating">Highest Rated</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search books by title, author, or keywords..." onkeyup="searchBooks(this.value)">
+        </div>
+
+        <div class="books-grid">
+            <div class="book-card">
+                <div class="book-cover">
+                    <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Godan">
+                    <div class="book-badge">Classic</div>
+                </div>
+                <div class="book-info">
+                    <h3>गोदान</h3>
+                    <div class="author">मुंशी प्रेमचंद</div>
+                    <p>A masterpiece of Hindi literature that depicts the socio-economic challenges faced by Indian farmers.</p>
+                    <div class="book-meta">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            4.8
+                        </div>
+                        <button class="read-btn">Read Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">
+                    <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Madhushala">
+                    <div class="book-badge">Poetry</div>
+                </div>
+                <div class="book-info">
+                    <h3>मधुशाला</h3>
+                    <div class="author">हरिवंश राय बच्चन</div>
+                    <p>A collection of verses that uses the metaphor of a wine house to explore life's deeper meanings.</p>
+                    <div class="book-meta">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            4.9
+                        </div>
+                        <button class="read-btn">Read Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">
+                    <img src="https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Deepshikha">
+                    <div class="book-badge">Poetry</div>
+                </div>
+                <div class="book-info">
+                    <h3>दीपशिखा</h3>
+                    <div class="author">महादेवी वर्मा</div>
+                    <p>A collection of profound poetry that explores themes of love, longing, and spirituality.</p>
+                    <div class="book-meta">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            4.7
+                        </div>
+                        <button class="read-btn">Read Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
+    <script>
+        function filterBooks() {
+            const genre = document.getElementById('genreFilter').value;
+            const author = document.getElementById('authorFilter').value;
+            const sort = document.getElementById('sortFilter').value;
+            
+            // Here you would typically make an API call to filter books
+            console.log('Filtering books:', { genre, author, sort });
+        }
+
+        function searchBooks(query) {
+            query = query.toLowerCase();
+            const bookCards = document.querySelectorAll('.book-card');
+            
+            bookCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const author = card.querySelector('.author').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                
+                if (title.includes(query) || author.includes(query) || description.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html> 
